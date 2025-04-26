@@ -42,7 +42,6 @@ export const getProductById = async (id: string) => {
 // get delete product by id
 export const deleteProduct = async (id: string) => {
   const token =  (await cookies()).get("accessToken")?.value
-  console.log(token);
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/meals/${id}`, {
       method: "DELETE",

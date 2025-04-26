@@ -24,11 +24,14 @@ const Navbar = () => {
     const pathname = usePathname();
     const router = useRouter();
 
-    const handleLogout = () => {
-        dispatch(logoutUser());
-        logout();
-        if (protectedRoutes.some((route) => pathname.match(route))) {
-            router.push("/");
+    const handleLogout = async () => {
+        try {
+            dispatch(logoutUser());
+            await logout();
+        } finally {
+            if (protectedRoutes.some((route) => pathname.match(route))) {
+                router.push("/");
+            }
         }
     };
 
@@ -176,7 +179,7 @@ const Navbar = () => {
                                         : "/dashboard/user"
                                 }
                                 className="hover:text-emerald-500 font-medium flex gap-1 justify-start items-center text-gray-800">
-                                <LayoutDashboard className="w-4"/>
+                                <LayoutDashboard className="w-4" />
                                 Dashboard
                             </Link>
                             <Button

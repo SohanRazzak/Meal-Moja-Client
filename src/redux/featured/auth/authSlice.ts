@@ -6,6 +6,8 @@ export type TUser = {
   role: string;
   phoneNumber: string;
   userId: string;
+  image?: string;
+  name?: string;
   iat: number;
   exp: number;
 };

@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { verifyToken } from "@/lib/utils/verifyToken";
 import { setUser, TUser } from "@/redux/featured/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { loginUser } from "@/services/Auth";
+import {getCurrentUserInfo, loginUser } from "@/services/Auth";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,6 +35,8 @@ const LoginForm = () => {
         const toastId = toast.loading("Loging in...", { duration: 2000 });
         try {
             const res = await loginUser(data);
+            const dataNew = await getCurrentUserInfo();
+            console.log(dataNew);
             if (res?.success) {
                 const user = verifyToken(res.data.accessToken) as TUser;
                 toast.success("Login Successful!", { id: toastId });
@@ -56,6 +58,7 @@ const LoginForm = () => {
                     id: toastId,
                 });
             }
+            
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error?.message || "Failed to login!", {

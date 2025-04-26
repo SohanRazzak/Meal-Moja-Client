@@ -67,7 +67,6 @@ const token = (await cookies()).get("accessToken")?.value;
         });
         revalidateTag("ORDERS");
         const data = await res.json();
-        console.log(data);
         return data;
 
     } catch (error: any) {

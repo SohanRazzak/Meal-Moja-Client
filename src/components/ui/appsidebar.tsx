@@ -89,13 +89,17 @@ export function AppSidebar() {
     const router = useRouter();
     const pathname = usePathname();
 
-    const handleLogout = () => {
-        dispatch(logoutUser());
-        logout();
-        if (protectedRoutes.some((route) => pathname.match(route))) {
-            router.push("/");
+    const handleLogout = async () => {
+        try {
+            dispatch(logoutUser());
+            await logout();
+        } finally {
+            if (protectedRoutes.some((route) => pathname.match(route))) {
+                router.push("/");
+            }
         }
     };
+    
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader>

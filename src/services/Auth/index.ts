@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
 import { jwtDecode } from "jwt-decode";
@@ -24,18 +25,19 @@ export const loginUser = async (userData: FieldValues) => {
 
         const result = await res.json();
 
-        console.log(
-            (await cookies()).get("refreshToken")
-        );
+        
         if (result?.success) {
             
             (await cookies()).set("accessToken", result?.data?.accessToken);
             // refresh token server theke asbe
             // (await cookies()).set("refreshToken", result?.data?.refreshToken);
+
+            // recieving , formatting and  Setting cookies
+            (await cookies()).set("refreshToken", res.headers.getSetCookie()[0].slice(13).split(";")[0])
+            
         }
 
         return result;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return Error(error);
     }
@@ -50,6 +52,7 @@ export const logout = async () => {
 // get current user
 export const getCurrentUser = async () => {
     const accessToken = (await cookies()).get("accessToken")?.value;
+
     let decodedData = null;
 
     if (accessToken) {
@@ -59,3 +62,23 @@ export const getCurrentUser = async () => {
         return null;
     }
 };
+
+// get current user profile 
+export const getCurrentUserInfo = async () => {
+    const accessToken = (await cookies()).get("accessToken")?.value;
+
+    try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/get-my-data`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `${accessToken}`
+                }
+            })
+
+            return res;
+        } catch (error: any) {
+            return Error(error);
+        }
+};
+
