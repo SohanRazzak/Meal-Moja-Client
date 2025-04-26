@@ -5,16 +5,13 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 
-// token for authorization
-const token = (await cookies()).get("accessToken")?.value;
-
 // get all orders
 export const getAllOrders = async (
     page?: string,
     limit?: string
 ) => {
+const token = (await cookies()).get("accessToken")?.value;
     try {
-        console.log(`${process.env.NEXT_PUBLIC_BASE_API}/orders?limit=${limit || 15}&page=${page || 1}`);
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_API}/orders?limit=${limit || 15}&page=${page || 1}`,
             {
@@ -36,7 +33,8 @@ export const getAllOrders = async (
 
 // update order status
 export const updateOrder = async ({id, status}: {id:string,status: string}) => {
-    console.log(token);
+const token = (await cookies()).get("accessToken")?.value;
+
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/orders/update-order-status`, {
             method: "PUT",
@@ -57,7 +55,8 @@ export const updateOrder = async ({id, status}: {id:string,status: string}) => {
 
 // delete order
 export const deleteOrder = async (id: string) => {
-    console.log(token);
+const token = (await cookies()).get("accessToken")?.value;
+
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/orders/${id}`, {
             method: "DELETE",
@@ -68,6 +67,7 @@ export const deleteOrder = async (id: string) => {
         });
         revalidateTag("ORDERS");
         const data = await res.json();
+        console.log(data);
         return data;
 
     } catch (error: any) {

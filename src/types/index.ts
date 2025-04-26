@@ -13,20 +13,6 @@ export type TMeal = {
   // updatedAt: string;
 };
 
-<<<<<<< HEAD
-
-export type TOrder = {
-  _id: string;
-  email: string;
-  customer: string;
-  quantity: number;
-  totalPrice: number;
-  status: string;
-  transaction?: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-}
-=======
 export type TOrder = {
     _id: string;
     email: string;
@@ -65,4 +51,3 @@ export type TOrder = {
   
     __v: number;
 }  
->>>>>>> 5b486597bf53c701bca4b478347839cea96c2ce0

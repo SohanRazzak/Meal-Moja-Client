@@ -20,7 +20,7 @@ const MealsPage = async ({
   const products: TMeal[] = res?.data?.result;
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 my-10 gap-5 md:max-w-3xl lg:max-w-6xl mx-auto place-items-center px-4">
+    <div className="min-h-screen grid md:grid-cols-2 lg:grid-cols-3 my-10 gap-5 md:max-w-3xl lg:max-w-6xl mx-auto place-items-center px-4">
       <div className="col-span-full w-full">
         <SectionHeading
           title="Find Your Flavor"

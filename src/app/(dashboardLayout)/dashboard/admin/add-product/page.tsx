@@ -5,7 +5,7 @@ import chef from '@/assets/Chef-bro.svg';
 const AddProductPage = () => {
     return (
             <div className='max-w-6xl mx-auto min-h-screen flex flex-row-reverse items-center justify-around gap-5 p-3'>
-                <div className="hidden md:block self-center md:basis-1/2 justify-items-center">
+                <div className="hidden lg:block self-center md:basis-1/2 justify-items-center">
                     <Image
                     src={chef}
                     alt="Add new Meal"
@@ -14,7 +14,7 @@ const AddProductPage = () => {
                     className="aspect-square"
                     />
                 </div>
-                <div className="md:basis-1/2 shrink-0 my-8">
+                <div className="md:basis-1/2 shrink-0 w-full my-8">
                 <AddProductForm/>
                 </div>
             </div>

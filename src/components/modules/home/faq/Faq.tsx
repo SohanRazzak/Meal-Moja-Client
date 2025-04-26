@@ -19,7 +19,7 @@ interface FaqItem {
 const MealBoxFaq = () => {
     const items = faqItems
     return (
-        <section className="py-16">
+        <section className="py-16 px-4">
             <div className="container mx-auto">
                 <div className="mx-auto flex max-w-3xl flex-col text-left md:text-center">
                     <SectionHeading

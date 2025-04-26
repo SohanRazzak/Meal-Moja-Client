@@ -65,7 +65,7 @@ const AddProductForm = () => {
     };
 
     return (
-        <div className="max-w-lg mx-auto rounded-lg shadow-boxed px-5 md:px-8 py-6 my-8 bg-white">
+        <div className="w-full mx-auto rounded-lg shadow-boxed px-5 md:px-8 py-6 my-8 bg-white">
             <SectionHeading title="Add a New Meal" />
             <Form {...form}>
                 <form

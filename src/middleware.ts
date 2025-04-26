@@ -44,6 +44,7 @@ export const config = {
         "/login",
         "/dashboard", 
         "/dashboard/:page",
-        "/dashboard/:page/:page"
+        "/dashboard/:page/:page",
+        "/dashboard/:page/:page/:page",
     ],
 };

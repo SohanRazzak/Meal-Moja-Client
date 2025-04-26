@@ -1,6 +1,6 @@
 "use client";
 import { deleteProduct } from "@/services/Products";
-import { Button } from "../ui/button";
+import { Button } from "../../../ui/button";
 import { toast } from "sonner";
 import Swal from 'sweetalert2';
 
@@ -31,7 +31,7 @@ const DeleteByIdButton = ({
                 confirmButtonText: "Yes, delete it!",
             });
 
-            if (result) {
+            if (result.isConfirmed) {
                 await deleteProduct(id);
                 toast.success("Product deleted successfully");
             }

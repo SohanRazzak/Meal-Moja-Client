@@ -1,7 +1,7 @@
 export const faqItems = [
     {
       id: "faq-1",
-      question: "How do I place an order on Meal Box?",
+      question: "How do I place an order on Meal Moja?",
       answer:
         "You can browse available meals on your dashboard. Simply select your preferred meals and confirm your order for the week. You can also schedule orders in advance.",
     },

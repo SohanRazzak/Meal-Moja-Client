@@ -1,20 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
-import Pagination from "@/components/shared/pagination";
+// import Pagination from "@/components/shared/pagination";
+import DeleteOrderButton from "@/components/modules/orders/deleteOrder/deleteorder";
+import ChangeOrderStatus from "@/components/modules/orders/orderStatus/changeorderstatus";
+import SectionHeading from "@/components/shared/sectionheading";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import {
     Table,
     TableBody,
@@ -23,9 +18,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {  getAllOrders } from "@/services/Orders";
+import { getAllOrders } from "@/services/Orders";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontal, Trash2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 // import { toast } from "sonner";
 // import Swal from "sweetalert2";
 
@@ -33,49 +30,13 @@ const ManageOrdersPage = async () => {
     const res = await getAllOrders(undefined, "20");
 
     const orders = res?.data;
-    // console.log(orders);
 
-    // const handleStatusUpdate = async (orderId: string, newStatus: string) => {
-    //     const data = {
-    //         id: orderId,
-    //         status: newStatus,
-    //     };
-    //     try {
-    //         await updateOrder(data);
-    //         toast.success("Order status updated successfully");
-    //     } catch (error) {
-    //         toast.error("Failed to update order status");
-    //         console.error("Error updating order:", error);
-    //     }
-    // };
-
-    // const handleDelete = async (orderId: string) => {
-    //     try {
-    //         const result = await Swal.fire({
-    //             title: "Are you sure?",
-    //             text: "You won't be able to revert this!",
-    //             icon: "warning",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#3085d6",
-    //             cancelButtonColor: "#d33",
-    //             confirmButtonText: "Yes, delete it!",
-    //         });
-
-    //         if (result.isConfirmed) {
-    //             await deleteOrder(orderId);
-    //             toast.success("Order deleted successfully");
-    //         }
-    //     } catch (error) {
-    //         toast.error("Failed to delete order");
-    //         console.error("Error deleting order:", error);
-    //     }
-    // };
 
     // fomat date
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
+            year: "2-digit",
+            month: "numeric",
             day: "numeric",
             hour: "2-digit",
             minute: "2-digit",
@@ -85,20 +46,20 @@ const ManageOrdersPage = async () => {
     return (
         <div className="container mx-auto py-10">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Order Management</h1>
+            <SectionHeading title="Order Management"/>
             </div>
 
-            <div className="rounded-md border">
+            <div className="rounded-md border mx-3">
                 <Table>
                     <TableHeader>
                         <TableRow>
                             <TableHead>Order ID</TableHead>
                             <TableHead>Customer</TableHead>
-                            <TableHead>Meal</TableHead>
-                            <TableHead>Quantity</TableHead>
+                            <TableHead>Meal Info.</TableHead>
+                            <TableHead>Qty.</TableHead>
                             <TableHead>Total Price</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Payment</TableHead>
+                            <TableHead>TrxId</TableHead>
                             <TableHead>Date</TableHead>
                             <TableHead className="text-right">
                                 Actions
@@ -109,58 +70,62 @@ const ManageOrdersPage = async () => {
                         {orders?.map((order: any) => (
                             <TableRow key={order._id}>
                                 <TableCell className="font-medium">
-                                    {order._id}
+                                    {"..." + order._id.slice(-6)}
+                                </TableCell>
+                                <TableCell className="flex items-center gap-2">
+                                    <Image
+                                        src={order.customer.profileImage}
+                                        alt={
+                                            order.customer.title ||
+                                            "profile image"
+                                        }
+                                        width={40}
+                                        height={40}
+                                        className="rounded-full"
+                                    />
+                                    <p className="flex flex-col text-gray-700">
+                                        <span className="font-semibold font-ubuntu">
+                                            {order.customer?.name || "N/A"}
+                                        </span>
+                                        <span>
+                                            {order.email ||
+                                                order.customer?.email ||
+                                                "N/A"}
+                                        </span>
+                                    </p>
                                 </TableCell>
                                 <TableCell>
-                                    {order.email ||
-                                        order.customer?.email ||
-                                        "N/A"}
+                                    <p className="flex flex-col text-gray-700">
+                                        <span className="font-semibold text-indigo-700">
+                                            <Link href={`/meals/${order.id._id}`}>
+                                            {order.id?.title || "N/A"}
+                                            </Link>
+                                        </span>
+                                        <span>
+                                            {order.id?.dietary || "N/A"}
+                                        </span>
+                                    </p>
                                 </TableCell>
-                                <TableCell>
-                                    {order.meal?.title || "N/A"}
-                                </TableCell>
-                                <TableCell>{order.quantity}</TableCell>
+                                <TableCell>{order.quantity} x</TableCell>
                                 <TableCell>
                                     ${order.totalPrice.toFixed(2)}
                                 </TableCell>
                                 <TableCell>
-                                    <Select
-                                        value={order.status}
-                                        // onValueChange={(value) =>
-                                        //     handleStatusUpdate(order._id, value)
-                                        // }
-                                        >
-                                        <SelectTrigger className="w-[150px]">
-                                            <SelectValue placeholder="Select status" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {[
-                                                "Pending",
-                                                "Paid",
-                                                "Preparing",
-                                                "Packing",
-                                                "Shipped",
-                                                "Completed",
-                                                "Cancelled",
-                                            ].map((status) => (
-                                                <SelectItem
-                                                    key={status}
-                                                    value={status}>
-                                                    {status}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    <ChangeOrderStatus id={order._id} value={order.status}/>
                                 </TableCell>
                                 <TableCell>
-                                    {order.transaction?.method ? (
-                                        <span className="capitalize">
-                                            {order.transaction.method} -{" "}
-                                            {
-                                                order.transaction
-                                                    .transactionStatus
-                                            }
-                                        </span>
+                                    {order.transaction?.id ? (
+                                        <p className="flex flex-col gap-1 text-gray-700 font-medium">
+                                            <span className="capitalize">
+                                                {order.transaction.id}
+                                            </span>
+                                            <span>
+                                                {
+                                                    order.transaction
+                                                        .transactionStatus
+                                                }
+                                            </span>
+                                        </p>
                                     ) : (
                                         "Not paid"
                                     )}
@@ -181,14 +146,13 @@ const ManageOrdersPage = async () => {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
-                                            <DropdownMenuItem
-                                                // className="text-red-600"
-                                                // onClick={() =>
-                                                //     handleDelete(order._id)
-                                                // }
-                                                >
+                                        <DropdownMenuItem className="text-red-600 py-0 flex items-center">
                                                 <Trash2 className="mr-2 h-4 w-4" />
-                                                Delete
+                                                <DeleteOrderButton
+                                                    id={order._id}
+                                                    title="Delete"
+                                                    className="px-0 py-0 h-8 self-center"
+                                                />
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
@@ -197,12 +161,12 @@ const ManageOrdersPage = async () => {
                         ))}
                     </TableBody>
                 </Table>
-                <div className="grid place-items-center mb-5 px-3">
-                                <Pagination
-                                    totalPage={res?.data?.meta?.totalPage}
-                                    page={res?.data?.meta?.page}
-                                />
-                                </div>
+                {/* <div className="grid place-items-center mb-5 px-3">
+                    <Pagination
+                        totalPage={res?.data?.meta?.totalPage}
+                        page={res?.data?.meta?.page}
+                    />
+                </div> */}
             </div>
         </div>
     );

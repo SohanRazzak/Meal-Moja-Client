@@ -6,6 +6,7 @@ import {
     TruckElectric,
     Kanban,
     List,
+    BookDashed,
 } from "lucide-react";
 import logoSquare from "@/assets/logos/logo-icon.png";
 
@@ -41,6 +42,11 @@ const orderItems = [
 ];
 // user links
 const userManagementItems = [
+    {
+        title: "Dashboard",
+        url: "/",
+        icon: BookDashed,
+    },
     {
         title: "User List",
         url: "/manage-users",

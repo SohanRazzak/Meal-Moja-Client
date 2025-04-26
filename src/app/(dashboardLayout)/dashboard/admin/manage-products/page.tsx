@@ -19,7 +19,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { TMeal } from "@/types";
 import SectionHeading from "@/components/shared/sectionheading";
-import DeleteByIdButton from "@/components/shared/deleteproduct";
+import DeleteByIdButton from "@/components/modules/products/deleteProduct/deleteproduct";
 import Pagination from "@/components/shared/pagination";
 
 const ManageProductsPage = async () => {
