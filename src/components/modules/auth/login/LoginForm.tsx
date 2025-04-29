@@ -10,8 +10,7 @@ import {
     FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { verifyToken } from "@/lib/utils/verifyToken";
-import { setUser, TUser } from "@/redux/featured/auth/authSlice";
+import { setUser} from "@/redux/featured/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import {getCurrentUserInfo, loginUser } from "@/services/Auth";
 import { Eye, EyeOff } from "lucide-react";
@@ -35,14 +34,20 @@ const LoginForm = () => {
         const toastId = toast.loading("Loging in...", { duration: 2000 });
         try {
             const res = await loginUser(data);
-            const dataNew = await getCurrentUserInfo();
-            console.log(dataNew);
             if (res?.success) {
-                const user = verifyToken(res.data.accessToken) as TUser;
+                const userInfo = await getCurrentUserInfo();
+                const user = userInfo.data;
                 toast.success("Login Successful!", { id: toastId });
                 dispatch(
                     setUser({
-                        user: user,
+                        user: {
+                            email: user.email,
+                            role: user.role,
+                            phoneNumber: user.phoneNumber,
+                            userId: user._id,
+                            image: user.profileImage,
+                            name: user.name
+                          },
                         token: res.data.accessToken,
                     })
                 );
@@ -127,7 +132,7 @@ const LoginForm = () => {
                     />
 
                     <Button
-                        className="w-[90%] mt-5 mx-auto block"
+                        className="w-full mt-5 mx-auto block"
                         type="submit">
                         Login
                     </Button>

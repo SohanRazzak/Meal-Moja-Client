@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -29,7 +30,7 @@ export const loginUser = async (userData: FieldValues) => {
         if (result?.success) {
             
             (await cookies()).set("accessToken", result?.data?.accessToken);
-            // refresh token server theke asbe
+            // refresh token server theke asbe response er sathe
             // (await cookies()).set("refreshToken", result?.data?.refreshToken);
 
             // recieving , formatting and  Setting cookies
@@ -68,15 +69,15 @@ export const getCurrentUserInfo = async () => {
     const accessToken = (await cookies()).get("accessToken")?.value;
 
     try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/get-my-data`, {
-                method: "GET",
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API}/users/get-my-data`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization" : `${accessToken}`
                 }
             })
+            const result = res.data;
 
-            return res;
+            return result;
         } catch (error: any) {
             return Error(error);
         }

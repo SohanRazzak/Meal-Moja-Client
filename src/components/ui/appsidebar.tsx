@@ -7,6 +7,7 @@ import {
     Kanban,
     List,
     BookDashed,
+    IdCardIcon,
 } from "lucide-react";
 import logoSquare from "@/assets/logos/logo-icon.png";
 
@@ -46,6 +47,11 @@ const userManagementItems = [
         title: "Dashboard",
         url: "/",
         icon: BookDashed,
+    },
+    {
+        title: "Profile",
+        url: "/profile",
+        icon: IdCardIcon,
     },
     {
         title: "User List",

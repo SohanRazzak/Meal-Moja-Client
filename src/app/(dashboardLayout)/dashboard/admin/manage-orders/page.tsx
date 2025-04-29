@@ -18,36 +18,21 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { formatDate } from "@/lib/utils/formatDate";
 import { getAllOrders } from "@/services/Orders";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// import { toast } from "sonner";
-// import Swal from "sweetalert2";
 
 const ManageOrdersPage = async () => {
     const res = await getAllOrders(undefined, "20");
 
     const orders = res?.data;
 
-
-    // fomat date
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString("en-US", {
-            year: "2-digit",
-            month: "numeric",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-    };
-
     return (
         <div className="container mx-auto py-10">
-            <div className="flex justify-between items-center mb-6">
-            <SectionHeading title="Order Management"/>
-            </div>
+            <SectionHeading title="Order Management" size="4xl"/>
 
             <div className="rounded-md border mx-3">
                 <Table>
@@ -161,6 +146,9 @@ const ManageOrdersPage = async () => {
                         ))}
                     </TableBody>
                 </Table>
+                {
+                    !orders.length && <p className="text-4xl font-semibold font-noto-mono h-40 grid place-items-center p-3">No Orders Found!</p>
+                }
                 {/* <div className="grid place-items-center mb-5 px-3">
                     <Pagination
                         totalPage={res?.data?.meta?.totalPage}

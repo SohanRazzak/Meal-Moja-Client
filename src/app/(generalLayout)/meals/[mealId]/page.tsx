@@ -118,7 +118,7 @@ const MealDetailsPage = async ({
                         </CardContent>
 
                         <CardFooter className="p-0 pt-6 text-xs text-muted-foreground">
-                            Meal ID: {meal.createdBy}
+                            Meal ID: {meal._id}
                         </CardFooter>
                     </div>
                 </div>

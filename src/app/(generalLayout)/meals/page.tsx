@@ -27,7 +27,7 @@ const MealsPage = async ({
           subtitle="Discover meals that match your cravings.
         Fresh picks, every time you search."
         ></SectionHeading>
-        <div className="w-full flex justify-between items-center px-4">
+        <div className="w-full flex justify-between flex-wrap gap-3 items-center px-4">
           <div className="flex justify-start items-center gap-1">
             <Image
               src={websiteLogo}
@@ -40,7 +40,7 @@ const MealsPage = async ({
               Find Meals
             </p>
           </div>
-          <div>
+          <div className="grow justify-items-end">
             <SearchBar></SearchBar>
           </div>
         </div>

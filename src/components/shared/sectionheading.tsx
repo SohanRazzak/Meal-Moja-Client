@@ -13,8 +13,8 @@ const SectionHeading = ({ title, subtitle, className, size }: SectionHeadingProp
     const secondHalf = words.slice(mid);
 
     return (
-        <div className={`text-center mb-8 ${className}`}>
-            <h2 className={`text-3xl font-bold font-[Ubuntu] ${size && "text-".concat(size)}`}>
+        <div className={`text-center mb-8 ${className ? className : ""}`}>
+            <h2 className={`text-3xl font-bold font-[Ubuntu] ${size ? size && "text-".concat(size):""}`}>
                 <span className="text-emerald-500">{firstHalf.join(" ")}</span>{" "}
                 <span className="text-black">{secondHalf.join(" ")}</span>
             </h2>

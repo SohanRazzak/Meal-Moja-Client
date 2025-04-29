@@ -118,6 +118,9 @@ const ManageProductsPage = async () => {
                         ))}
                     </TableBody>
                 </Table>
+                {
+                    !products.length && <p className="text-4xl font-semibold font-noto-mono h-40 grid place-items-center p-3">No Products Found!</p>
+                }
                 <div className="grid place-items-center mb-5 px-3">
                 <Pagination
                     totalPage={data?.data?.meta?.totalPage}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import websiteLogo from "../../assets/logos/Meal Moja Logo Teal Transparen.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp, IoSearch } from "react-icons/io5";
@@ -15,14 +15,23 @@ import { logout } from "@/services/Auth";
 import { protectedRoutes } from "@/constants";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { gavatar } from "../modules/products/addProduct/constants";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false); // For the user image dropdown
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
     const user = useAppSelector(selectCurrentUser);
+    
+    
     const dispatch = useAppDispatch();
     const pathname = usePathname();
     const router = useRouter();
+
+    useEffect(()=>{
+        setIsOpen(false);
+        setIsDropdownOpen(false)
+    },[pathname])
 
     const handleLogout = async () => {
         try {
@@ -75,18 +84,24 @@ const Navbar = () => {
                 <div className="hidden md:flex items-center space-x-6">
                     <Link
                         href="/"
-                        className="hover:text-emerald-500 font-medium flex gap-1 justify-center items-center">
+                        className=  {cn("hover:text-emerald-500 font-medium flex gap-1 justify-center items-center",
+                            pathname === "/" && "underline-offset-4 underline text-emerald-600"
+                        )}>
                         <IoMdHome /> Home
                     </Link>
                     <Link
                         href="/meals"
-                        className="hover:text-emerald-500 font-medium flex gap-1 justify-center items-center">
+                        className=  {cn("hover:text-emerald-500 font-medium flex gap-1 justify-center items-center",
+                            pathname === "/meals" && "underline-offset-4 underline text-emerald-600"
+                        )}>
                         <IoSearch />
                         Find Meals
                     </Link>
                     <Link
                         href="/order-meal"
-                        className="hover:text-emerald-500 font-medium flex gap-1 justify-center items-center">
+                        className=  {cn("hover:text-emerald-500 font-medium flex gap-1 justify-center items-center",
+                            pathname === "/order-meal" && "underline-offset-4 underline text-emerald-600"
+                        )}>
                         <ImSpoonKnife />
                         Order Meal
                     </Link>
@@ -98,11 +113,12 @@ const Navbar = () => {
                                 onClick={toggleDropdown}
                                 className="flex items-center gap-2">
                                 <Image
-                                    src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
+                                    src={user?.image || gavatar}
                                     alt="User Profile"
                                     width={40}
                                     height={40}
-                                    className="rounded-full"
+                                    priority={true}
+                                    className="rounded-full w-10 h-10 border-2"
                                 />
                             </button>
                             {isDropdownOpen && (

@@ -16,7 +16,7 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex gap-2 items-center max-w-md mx-auto p-2 bg-white border rounded shadow-sm"
+      className="flex gap-2 items-center max-w-md p-2 bg-white border rounded shadow-sm"
     >
       <input
         type="text"

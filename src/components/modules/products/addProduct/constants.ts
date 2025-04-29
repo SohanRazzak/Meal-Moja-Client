@@ -14,3 +14,6 @@ export const dietaryOptions = [
     "SugarFree",
     "Organic",
 ] 
+
+
+export const gavatar = "https://www.gravatar.com/avatar";

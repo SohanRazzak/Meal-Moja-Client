@@ -31,6 +31,30 @@ const token = (await cookies()).get("accessToken")?.value;
     }
 };
 
+
+// get all orders
+export const getOrderById = async (
+    id: string
+) => {
+const token = (await cookies()).get("accessToken")?.value;
+console.log(`${process.env.NEXT_PUBLIC_BASE_API}/orders/${id}`);
+    try {
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_API}/orders/${id}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${token}`,
+                },
+            }
+        );
+        const data = await res.json();
+        return data;
+    } catch (error: any) {
+        return Error(error.message);
+    }
+};
+
 // update order status
 export const updateOrder = async ({id, status}: {id:string,status: string}) => {
 const token = (await cookies()).get("accessToken")?.value;
